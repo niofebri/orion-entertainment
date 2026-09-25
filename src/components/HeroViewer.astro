@@ -1,0 +1,168 @@
+---
+import { projects } from '../data/projects';
+
+function makeGradient(index: number): string {
+  const hues = [210, 140, 30, 260, 180, 50, 220, 340, 160, 300, 100, 190, 25];
+  const h = hues[index % hues.length];
+  return `linear-gradient(135deg, hsl(${h},25%,18%) 0%, hsl(${(h + 40) % 360},20%,12%) 50%, hsl(${(h + 80) % 360},15%,8%) 100%)`;
+}
+---
+
+<section class="h-dvh grid grid-cols-[1fr_350px] grid-rows-[minmax(0,1fr)] max-lg:grid-cols-1 max-lg:grid-rows-[60vh_auto] relative overflow-hidden" id="hero">
+  <!-- Center Visual -->
+  <div class="relative overflow-hidden cursor-crosshair min-h-0">
+<div class="absolute inset-0" id="heroImages">
+  {projects.map((p, i) => (
+    p.heroVideo ? (
+      <video
+        class:list={['hero-placeholder', 'w-full h-full object-cover', i === 0 && 'active']}
+        data-index={i}
+        src={p.heroVideo}
+        autoplay
+        loop
+        muted
+        playsinline
+      />
+    ) : p.heroImage ? (
+      <img
+        src={p.heroImage}
+        alt={p.title}
+        class:list={['hero-placeholder', 'w-full h-full object-cover', i === 0 && 'active']}
+        data-index={i}
+        loading={i === 0 ? 'eager' : 'lazy'}
+      />
+    ) : (
+      <div
+        class:list={['hero-placeholder', i === 0 && 'active']}
+        style={`background: ${makeGradient(i)}`}
+        data-index={i}
+      />
+    )
+  ))}
+</div>
+
+    <!-- Overlay -->
+    <div class="absolute inset-0 pointer-events-none"
+      style="background: linear-gradient(180deg, rgba(11,11,11,0.50) 0%, rgba(11,11,11,0.50) 35%, rgba(11,11,11,0.50) 100%)"
+    />
+
+    <!-- Content -->
+    <div class="absolute bottom-24 left-14 right-14 z-2 max-lg:bottom-10 max-lg:left-6 max-lg:right-6">
+      <div id="heroCat" class="text-[10px] font-medium tracking-[0.2em] uppercase text-white mb-4 opacity-0 translate-y-3"></div>
+      <h1 id="heroTitle" class="font-display text-[clamp(24px,3.2vw,52px)] font-medium leading-[1.15] text-white mb-4 max-w-[640px] opacity-0 translate-y-5 line-clamp-3"></h1>
+      <p id="heroDesc" class="text-sm text-white/65 max-w-[480px] leading-relaxed opacity-0 translate-y-3"></p>
+    </div>
+
+    <!-- Arrows -->
+    <div class="absolute bottom-14 right-8 flex gap-0.5 z-3 max-lg:bottom-6 max-lg:right-4">
+      <button id="prevBtn" class="w-12 h-12 bg-white/5 border border-white/12 text-white text-lg cursor-pointer transition-colors hover:bg-white/14 flex items-center justify-center" aria-label="Previous project">&#8592;</button>
+      <button id="nextBtn" class="w-12 h-12 bg-white/5 border border-white/12 text-white text-lg cursor-pointer transition-colors hover:bg-white/14 flex items-center justify-center" aria-label="Next project">&#8594;</button>
+    </div>
+  </div>
+
+  <!-- Right Panel -->
+  <aside class="bg-charcoal border-l border-border flex flex-col pt-24 px-8 pb-12 max-lg:pt-8 max-lg:px-5 min-h-0">
+    <div class="shrink-0">
+      <div class="text-[10px] font-medium tracking-[0.2em] uppercase text-dark-gray mb-12">Portofolio</div>
+      <div class="font-display text-[56px] max-lg:text-4xl font-normal text-off-white mb-2 leading-none">
+        <span id="panelCurrent">01</span>
+        <span class="text-dark-gray text-xl"> / <span id="panelTotal">{projects.length}</span></span>
+      </div>
+    </div>
+
+    <div class="flex-1 min-h-0 overflow-y-auto flex flex-col justify-start pt-6">
+      <div class="text-[10px] font-medium tracking-[0.15em] uppercase text-dark-gray mb-1.5">Ketegori</div>
+      <div id="panelCat" class="text-sm text-gray mb-6 leading-normal"></div>
+      <div class="text-[10px] font-medium tracking-[0.15em] uppercase text-dark-gray mb-1.5">Lokasi</div>
+      <div id="panelLoc" class="text-sm text-gray mb-6 leading-normal"></div>
+      <div class="text-[10px] font-medium tracking-[0.15em] uppercase text-dark-gray mb-1.5">Tanggal</div>
+      <div id="panelDate" class="text-sm text-gray mb-6 leading-normal"></div>
+    </div>
+
+    <a href="#" id="panelCta" class="panel-cta shrink-0 inline-flex items-center gap-3 text-[11px] font-medium tracking-[0.15em] uppercase text-off-white no-underline py-4 border-t border-b border-border cursor-pointer transition-all duration-300 w-full">
+  <span>Selengkapnya</span>
+      <svg class="w-4 h-4 shrink-0" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+    </a>
+  </aside>
+</section>
+
+<script>
+  import { gsap } from 'gsap';
+
+  function initHeroViewer() {
+    const heroEl = document.getElementById('hero');
+    if (!heroEl) return;
+
+    // Get project data from DOM
+    const placeholders = document.querySelectorAll('.hero-placeholder');
+    const totalProjects = placeholders.length;
+
+    // Project data (embedded from server)
+    const projectData = (window as any).__PROJECTS__;
+    if (!projectData) return;
+
+    let current = 0;
+    let animating = false;
+
+    function update(index: number) {
+      if (animating) return;
+      animating = true;
+      const p = projectData[index];
+
+      placeholders.forEach((el, i) => el.classList.toggle('active', i === index));
+
+      const textEls = [
+        document.getElementById('heroCat'),
+        document.getElementById('heroTitle'),
+        document.getElementById('heroDesc'),
+      ].filter(Boolean) as HTMLElement[];
+
+      gsap.to(textEls, {
+        opacity: 0, y: -10, duration: 0.25, stagger: 0.04,
+        onComplete: () => {
+          textEls[0].textContent = p.category;
+          textEls[1].textContent = p.title;
+          textEls[2].textContent = `${p.location} — ${p.date}`;
+          gsap.fromTo(textEls, { opacity: 0, y: 15 }, {
+            opacity: 1, y: 0, duration: 0.45, stagger: 0.06, ease: 'power2.out',
+          });
+        },
+      });
+
+      const panelEls = ['panelCat', 'panelLoc', 'panelDate']
+        .map((id) => document.getElementById(id))
+        .filter(Boolean) as HTMLElement[];
+
+      gsap.to(panelEls, {
+        opacity: 0, duration: 0.2,
+        onComplete: () => {
+         document.getElementById('panelCurrent')!.textContent = String(index + 1).padStart(2, '0');
+          panelEls[0].textContent = p.category;
+          panelEls[1].textContent = p.location;
+          panelEls[2].textContent = p.date;
+          const ctaEl = document.getElementById('panelCta') as HTMLAnchorElement | null;
+          if (ctaEl && p.slug) ctaEl.href = `/work/${p.slug}`;
+          gsap.to(panelEls, { opacity: 1, duration: 0.35, stagger: 0.05 });
+        },
+      });
+
+      setTimeout(() => { animating = false; }, 600);
+    }
+
+    function next() { current = (current + 1) % totalProjects; update(current); }
+    function prev() { current = (current - 1 + totalProjects) % totalProjects; update(current); }
+
+    document.getElementById('nextBtn')?.addEventListener('click', next);
+    document.getElementById('prevBtn')?.addEventListener('click', prev);
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowRight') next();
+      if (e.key === 'ArrowLeft') prev();
+    });
+
+    // Init first project
+    update(0);
+  }
+
+  initHeroViewer();
+  document.addEventListener('astro:after-swap', initHeroViewer);
+</script>

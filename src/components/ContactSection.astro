@@ -1,0 +1,140 @@
+---
+const links = [
+  { label: 'WhatsApp', value: '+62 821-2591-989' },
+  { label: 'Email', value: 'orionentertainment66@gmail.com' },
+  { label: 'Instagram', value: '@orion.entertainment_' },
+];
+---
+
+<section class="py-28 px-16 max-lg:py-20 max-lg:px-6 border-t border-border" id="contact">
+  <div class="grid grid-cols-[1fr_1.1fr] max-lg:grid-cols-1 gap-16 max-lg:gap-12">
+    <!-- Left: Headline + Contact Info -->
+    <div class="reveal">
+      <div class="text-[11px] font-semibold tracking-[0.2em] uppercase text-dark-gray mb-4">
+        <span class="text-accent">||</span> Kontak <span class="text-accent">||</span>
+      </div>
+      <h2 class="font-body text-[clamp(26px,3.6vw,44px)] font-bold leading-[1.15] text-off-white mb-1">
+        Let's make
+      </h2>
+      <h2 class="font-display italic text-[clamp(26px,3.6vw,44px)] font-medium leading-[1.15] text-off-white mb-5">
+        something happen.
+      </h2>
+      <p class="text-sm text-gray max-w-[420px] mb-8 leading-relaxed">
+        Planning an event, producing a video, or developing a new creative project? Let's talk.
+      </p>
+
+      <div class="space-y-4">
+        {links.map((l) => (
+          <div>
+            <div class="text-[10px] tracking-[0.15em] uppercase text-dark-gray mb-1">{l.label}</div>
+            <div class="text-xs font-semibold text-off-white">{l.value}</div>
+          </div>
+        ))}
+      </div>
+    </div>
+
+    <!-- Right: Contact Form -->
+    <div class="reveal">
+      <form id="contactForm" class="space-y-4">
+        <div class="grid grid-cols-2 max-sm:grid-cols-1 gap-4">
+          <input
+            type="text"
+            name="name"
+            placeholder="Name*"
+            required
+            class="w-full bg-charcoal border border-border text-off-white text-sm placeholder:text-dark-gray px-5 py-4 outline-none transition-colors focus:border-accent"
+          />
+          <input
+            type="email"
+            name="email"
+            placeholder="E-mail*"
+            required
+            class="w-full bg-charcoal border border-border text-off-white text-sm placeholder:text-dark-gray px-5 py-4 outline-none transition-colors focus:border-accent"
+          />
+        </div>
+
+        <input
+          type="text"
+          name="subject"
+          placeholder="Subject"
+          class="w-full bg-charcoal border border-border text-off-white text-sm placeholder:text-dark-gray px-5 py-4 outline-none transition-colors focus:border-accent"
+        />
+
+        <textarea
+          name="message"
+          placeholder="Text"
+          rows="6"
+          required
+          class="w-full bg-charcoal border border-border text-off-white text-sm placeholder:text-dark-gray px-5 py-4 outline-none transition-colors focus:border-accent resize-y"
+        ></textarea>
+
+        <button
+          type="submit"
+          id="contactSubmitBtn"
+          class="inline-flex items-center gap-3 text-xs font-semibold tracking-[0.1em] uppercase text-black bg-accent py-4 px-9 transition-all duration-300 hover:brightness-110 hover:gap-4 border-none cursor-pointer disabled:opacity-60 disabled:cursor-not-allowed"
+        >
+          Send Mail
+        </button>
+
+        <p id="formStatus" class="text-xs text-gray min-h-[1.2em]"></p>
+      </form>
+    </div>
+  </div>
+</section>
+
+<script>
+  // Formspree endpoint — sign up free at https://formspree.io, create a form,
+  // and replace the ID below with your own (looks like "https://formspree.io/f/xxxxxxxx")
+  const FORMSPREE_ENDPOINT = 'https://formspree.io/f/YOUR_FORM_ID';
+
+  function initContactForm() {
+    const form = document.getElementById('contactForm') as HTMLFormElement | null;
+    const statusEl = document.getElementById('formStatus');
+    const submitBtn = document.getElementById('contactSubmitBtn') as HTMLButtonElement | null;
+    if (!form) return;
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const data = new FormData(form);
+      const name = (data.get('name') as string) || '';
+      const email = (data.get('email') as string) || '';
+      const subject = (data.get('subject') as string) || 'Pertanyaan dari Website';
+      const message = (data.get('message') as string) || '';
+
+      if (submitBtn) {
+        submitBtn.disabled = true;
+        submitBtn.textContent = 'Sending...';
+      }
+      if (statusEl) statusEl.textContent = '';
+
+      try {
+        const response = await fetch(FORMSPREE_ENDPOINT, {
+          method: 'POST',
+          body: data,
+          headers: { Accept: 'application/json' },
+        });
+
+        if (response.ok) {
+          if (statusEl) statusEl.textContent = 'Terima kasih, pesan Anda telah terkirim.';
+          form.reset();
+        } else {
+          throw new Error('Form submission failed');
+        }
+      } catch (err) {
+        // Fallback: open the visitor's email client with the message pre-filled
+        const body = `Nama: ${name}\nEmail: ${email}\n\n${message}`;
+        const mailtoLink = `mailto:Orionentertainment66@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+        window.location.href = mailtoLink;
+        if (statusEl) statusEl.textContent = 'Membuka aplikasi email Anda...';
+      } finally {
+        if (submitBtn) {
+          submitBtn.disabled = false;
+          submitBtn.textContent = 'Send Mail';
+        }
+      }
+    });
+  }
+
+  initContactForm();
+  document.addEventListener('astro:after-swap', initContactForm);
+</script>

@@ -1,0 +1,26 @@
+---
+import Layout from '../layouts/Layout.astro';
+import HeroViewer from '../components/HeroViewer.astro';
+import WorkSection from '../components/WorkSection.astro';
+import ServicesSection from '../components/ServicesSection.astro';
+import AboutSection from '../components/AboutSection.astro';
+import ClientsSection from '../components/ClientsSection.astro';
+import ContactSection from '../components/ContactSection.astro';
+import ScrollReveal from '../components/ScrollReveal.astro';
+import { projects } from '../data/projects';
+---
+
+<Layout>
+  <HeroViewer />
+  <WorkSection />
+  <ServicesSection />
+  <AboutSection />
+  <ClientsSection />
+  <ContactSection />
+  <ScrollReveal />
+
+  <!-- Pass project data to client-side JS -->
+  <script define:vars={{ projectsJSON: JSON.stringify(projects) }}>
+    window.__PROJECTS__ = JSON.parse(projectsJSON);
+  </script>
+</Layout>

@@ -1,0 +1,31 @@
+---
+import { clients } from '../data/projects';
+---
+
+<section class="py-28 px-16 max-lg:py-20 max-lg:px-6 border-t border-border" id="clients">
+  <div class="text-[10px] font-medium tracking-[0.2em] uppercase text-dark-gray mb-12 reveal text-center">
+  <span class="text-accent">||</span> Klien &amp; Mitra Kami <span class="text-accent">||</span>
+  </div>
+
+ <div class="grid grid-cols-2 max-lg:grid-cols-1 max-w-[2000px] reveal">
+  {clients.map((c, i) => (
+    <div
+      class:list={[
+        'h-28 px-6 border-b border-border flex items-center justify-center transition-colors duration-300 hover:bg-white/[0.02]',
+        i % 2 === 0 ? 'border-r max-lg:border-r-0' : '',
+      ]}
+    >
+      {c.logo ? (
+        <img
+          src={c.logo}
+          alt={c.name}
+          class="max-w-[180px] object-contain"
+          style={`max-height: ${c.logoHeight ?? '56px'}`}
+        />
+      ) : (
+        <span class="text-sm text-gray transition-colors duration-300">{c.name}</span>
+      )}
+    </div>
+  ))}
+</div>
+</section>

@@ -1,0 +1,66 @@
+---
+import { services } from '../data/projects';
+
+---
+
+
+<section class="hex-texture py-28 px-16 max-lg:py-20 max-lg:px-6 border-t border-border" id="services">
+  <div class="text-center mb-16 reveal">
+    <div class="text-[11px] font-semibold tracking-[0.2em] uppercase text-dark-gray mb-5">
+      <span class="text-accent">||</span> Layanan <span class="text-accent">||</span>
+    </div>
+    <h2 class="font-body text-[clamp(28px,4vw,48px)] font-bold leading-[1.2] text-off-white max-w-[720px] mx-auto">
+      Hadirkan <span class="font-display italic font-medium">Pengalaman Berkesan</span><br />
+      Bersama Orion
+    </h2>
+  </div>
+
+  <div class="grid grid-cols-4 max-lg:grid-cols-2 max-sm:grid-cols-1 gap-4 reveal">
+{services.map((s, i) => (
+  <div class="service-card group relative bg-charcoal border border-border p-7 min-h-[220px] flex flex-col justify-between overflow-hidden transition-colors duration-400 cursor-default">
+    {s.image && (
+      <div class="absolute inset-0 z-0">
+        <img
+          src={s.image}
+          alt=""
+          class="w-full h-full object-cover"
+          style={`opacity: ${s.imageOpacity ?? 0.50}`}
+          loading="lazy"
+        />
+        <div class="absolute inset-0 bg-gradient-to-t from-charcoal via-charcoal/40 to-transparent" />
+      </div>
+    )}
+
+    <span class="service-dot absolute top-4 left-4 w-1.5 h-1.5 rounded-full bg-accent opacity-0 transition-opacity duration-300 z-10"></span>
+
+    <div class="w-9 h-9" aria-hidden="true"></div>
+    <div class="relative z-10">
+      <div class="service-num text-[11px] tracking-[0.1em] text-dark-gray mb-2 transition-colors duration-400">
+        {String(i + 1).padStart(2, '0')}
+      </div>
+      <div class="service-title font-display text-lg font-medium leading-snug text-off-white transition-colors duration-400">
+        {s.title}
+      </div>
+    </div>
+      </div>
+    ))}
+  </div>
+</section>
+
+
+<style>
+  .service-card:hover {
+    background: var(--color-accent);
+    border-color: var(--color-accent);
+  }
+  .service-card:hover .service-dot {
+    opacity: 1;
+  }
+  .service-card:hover .service-icon,
+  .service-card:hover .service-title {
+    color: var(--color-black);
+  }
+  .service-card:hover .service-num {
+    color: rgba(11, 11, 11, 0.6);
+  }
+</style>

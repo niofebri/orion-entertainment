@@ -1,0 +1,501 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { projects } from '../../data/projects';
+import type { GetStaticPaths } from 'astro';
+
+export const getStaticPaths: GetStaticPaths = () => {
+  return projects.map((p) => ({
+    params: { slug: p.slug },
+    props: { project: p },
+  }));
+};
+
+const { project } = Astro.props;
+
+const currentIndex = projects.findIndex((p) => p.id === project.id);
+
+const prevProject =
+  currentIndex > 0
+    ? projects[currentIndex - 1]
+    : projects[projects.length - 1];
+
+const nextProject =
+  currentIndex < projects.length - 1
+    ? projects[currentIndex + 1]
+    : projects[0];
+
+const gallery = project.gallery ?? [];
+
+function isVideo(src: string): boolean {
+  return /\.(mp4|webm|mov)$/i.test(src);
+}
+---
+
+<Layout
+  title={`${project.title} — Orion Entertainment`}
+  description={`${project.category} at ${project.location}`}
+>
+  <section
+    class="min-h-dvh grid grid-cols-[1fr_350px] max-lg:grid-cols-1 max-lg:grid-rows-[55vh_auto]"
+  >
+
+    <!-- ================================= -->
+    <!-- LEFT : PROJECT GALLERY -->
+    <!-- ================================= -->
+
+    <div
+      id="projectGallery"
+      class="relative overflow-hidden bg-charcoal select-none"
+    >
+
+      {gallery.length > 0 ? (
+        gallery.map((media, index) =>
+          isVideo(media) ? (
+            <video
+              class:list={[
+                'gallery-image',
+                index === 0 && 'gallery-active'
+              ]}
+              data-index={index}
+              src={media}
+              autoplay
+              loop
+              muted
+              playsinline
+            />
+          ) : (
+            <img
+              src={media}
+              alt={`${project.title} - Dokumentasi ${index + 1}`}
+              class:list={[
+                'gallery-image',
+                index === 0 && 'gallery-active'
+              ]}
+              data-index={index}
+              loading={index === 0 ? 'eager' : 'lazy'}
+              draggable="false"
+            />
+          )
+        )
+      ) : project.heroImage ? (
+        <img
+          src={project.heroImage}
+          alt={project.title}
+          class="absolute inset-0 w-full h-full object-cover"
+          draggable="false"
+        />
+      ) : (
+        <div class="absolute inset-0 bg-charcoal"></div>
+      )}
+
+      <!-- Dark Overlay -->
+      <div
+        class="absolute inset-0 pointer-events-none z-10"
+        style="background: linear-gradient(
+          180deg,
+          rgba(11,11,11,0.45) 0%,
+          rgba(11,11,11,0.05) 45%,
+          rgba(11,11,11,0.45) 100%
+        )"
+      ></div>
+
+      <!-- Back -->
+      <a
+        href="/#work"
+        class="absolute top-24 left-12 max-lg:top-20 max-lg:left-6 z-20 text-[11px] font-medium tracking-[0.12em] uppercase text-white/80 no-underline flex items-center gap-2 hover:text-white transition-colors"
+      >
+        <span>←</span>
+        Kembali
+      </a>
+
+      <!-- Gallery Counter -->
+      {gallery.length > 1 && (
+        <div
+          id="galleryCounter"
+          class="absolute bottom-14 left-12 max-lg:left-6 max-lg:bottom-6 z-20 text-[11px] tracking-[0.15em] text-white"
+        >
+          01 / {String(gallery.length).padStart(2, '0')}
+        </div>
+      )}
+
+      <!-- Gallery Navigation -->
+      {gallery.length > 1 && (
+        <div
+          class="absolute bottom-14 right-8 max-lg:bottom-6 max-lg:right-4 z-20 flex"
+        >
+          <button
+            id="galleryPrev"
+            type="button"
+            class="w-12 h-12 bg-black/20 border border-white/20 text-white text-lg flex items-center justify-center cursor-pointer hover:bg-white/15 transition-colors"
+            aria-label="Previous image"
+          >
+            ←
+          </button>
+
+          <button
+            id="galleryNext"
+            type="button"
+            class="w-12 h-12 bg-black/20 border border-white/20 text-white text-lg flex items-center justify-center cursor-pointer hover:bg-white/15 transition-colors"
+            aria-label="Next image"
+          >
+            →
+          </button>
+        </div>
+      )}
+
+    </div>
+
+
+    <!-- ================================= -->
+    <!-- RIGHT : PROJECT INFO -->
+    <!-- ================================= -->
+
+    <aside
+      class="bg-charcoal border-l border-border flex flex-col justify-between pt-24 px-10 pb-12 max-lg:pt-8 max-lg:px-6"
+    >
+
+      <div>
+
+        <!-- Category -->
+        <div
+          class="text-[10px] font-medium tracking-[0.15em] uppercase text-dark-gray mb-3"
+        >
+          {project.category}
+        </div>
+
+        <!-- Title -->
+        <h1
+          class="font-display text-[28px] font-medium text-off-white leading-snug mb-10"
+        >
+          {project.title}
+        </h1>
+
+        <!-- Location -->
+        <div class="mb-6">
+          <div
+            class="text-[10px] font-medium tracking-[0.15em] uppercase text-dark-gray mb-1"
+          >
+            Lokasi
+          </div>
+
+          <div class="text-sm text-gray">
+            {project.location}
+          </div>
+        </div>
+
+        <!-- Date -->
+        <div class="mb-6">
+          <div
+            class="text-[10px] font-medium tracking-[0.15em] uppercase text-dark-gray mb-1"
+          >
+            Tanggal
+          </div>
+
+          <div class="text-sm text-gray">
+            {project.date}
+          </div>
+        </div>
+
+        <!-- Description -->
+        {project.description && (
+          <div class="border-t border-border pt-8">
+            <div
+              class="text-[10px] font-medium tracking-[0.15em] uppercase text-dark-gray mb-3"
+            >
+              Tentang Project
+            </div>
+
+            <p class="text-sm text-gray leading-relaxed">
+              {project.description}
+            </p>
+          </div>
+        )}
+
+      </div>
+
+
+      <!-- ================================= -->
+      <!-- PREVIOUS / NEXT PROJECT -->
+      <!-- ================================= -->
+
+      <div
+        class="mt-12 border-t border-border pt-6 flex justify-between gap-4"
+      >
+
+        <a
+          href={`/work/${prevProject.slug}`}
+          data-direction="previous"
+          class="project-nav text-[10px] tracking-[0.12em] uppercase text-dark-gray no-underline hover:text-off-white transition-colors"
+        >
+          ← Sebelumnya
+        </a>
+
+        <a
+          href={`/work/${nextProject.slug}`}
+          data-direction="next"
+          class="project-nav text-[10px] tracking-[0.12em] uppercase text-dark-gray no-underline hover:text-off-white transition-colors"
+        >
+          Selanjutnya →
+        </a>
+
+      </div>
+
+    </aside>
+
+  </section>
+</Layout>
+
+
+<!-- ================================= -->
+<!-- GALLERY STYLE -->
+<!-- ================================= -->
+
+<style>
+  .gallery-image {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0;
+    transform: scale(1.03);
+    transition:
+      opacity 0.6s ease,
+      transform 0.8s ease;
+    pointer-events: none;
+  }
+
+  .gallery-active {
+    opacity: 1;
+    transform: scale(1);
+    pointer-events: auto;
+  }
+</style>
+
+
+<!-- ================================= -->
+<!-- PAGE TRANSITION STYLE -->
+<!-- ================================= -->
+
+<style>
+  /* Durasi perpindahan halaman */
+  ::view-transition-old(root),
+  ::view-transition-new(root) {
+    animation-duration: 0.6s;
+    animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+  }
+
+  /* ================================ */
+  /* NEXT */
+  /* ================================ */
+
+  html[data-direction="next"]::view-transition-old(root) {
+    animation-name: project-slide-out-left;
+  }
+
+  html[data-direction="next"]::view-transition-new(root) {
+    animation-name: project-slide-in-right;
+  }
+
+  /* ================================ */
+  /* PREVIOUS */
+  /* ================================ */
+
+  html[data-direction="previous"]::view-transition-old(root) {
+    animation-name: project-slide-out-right;
+  }
+
+  html[data-direction="previous"]::view-transition-new(root) {
+    animation-name: project-slide-in-left;
+  }
+
+  /* ================================ */
+  /* NEXT ANIMATION */
+  /* ================================ */
+
+  @keyframes project-slide-out-left {
+    from {
+      transform: translateX(0);
+      opacity: 1;
+    }
+
+    to {
+      transform: translateX(-30%);
+      opacity: 0;
+    }
+  }
+
+  @keyframes project-slide-in-right {
+    from {
+      transform: translateX(30%);
+      opacity: 0;
+    }
+
+    to {
+      transform: translateX(0);
+      opacity: 1;
+    }
+  }
+
+  /* ================================ */
+  /* PREVIOUS ANIMATION */
+  /* ================================ */
+
+  @keyframes project-slide-out-right {
+    from {
+      transform: translateX(0);
+      opacity: 1;
+    }
+
+    to {
+      transform: translateX(30%);
+      opacity: 0;
+    }
+  }
+
+  @keyframes project-slide-in-left {
+    from {
+      transform: translateX(-30%);
+      opacity: 0;
+    }
+
+    to {
+      transform: translateX(0);
+      opacity: 1;
+    }
+  }
+</style>
+
+
+<!-- ================================= -->
+<!-- GALLERY + PAGE NAVIGATION SCRIPT -->
+<!-- ================================= -->
+
+<script>
+  function initProjectPage() {
+    const images = document.querySelectorAll('.gallery-image');
+    const prevButton = document.getElementById('galleryPrev');
+    const nextButton = document.getElementById('galleryNext');
+    const counter = document.getElementById('galleryCounter');
+    const gallery = document.getElementById('projectGallery');
+
+    let currentIndex = 0;
+    let startX = 0;
+
+    /* ================================ */
+    /* GALLERY */
+    /* ================================ */
+
+    function showImage(index) {
+      if (images.length <= 1) return;
+
+      if (index < 0) {
+        index = images.length - 1;
+      }
+
+      if (index >= images.length) {
+        index = 0;
+      }
+
+      images.forEach(function (image, i) {
+        image.classList.toggle(
+          'gallery-active',
+          i === index
+        );
+      });
+
+      if (counter) {
+        counter.textContent =
+          String(index + 1).padStart(2, '0') +
+          ' / ' +
+          String(images.length).padStart(2, '0');
+      }
+
+      currentIndex = index;
+    }
+
+    function nextImage() {
+      showImage(currentIndex + 1);
+    }
+
+    function previousImage() {
+      showImage(currentIndex - 1);
+    }
+
+    if (nextButton) {
+      nextButton.addEventListener('click', nextImage);
+    }
+
+    if (prevButton) {
+      prevButton.addEventListener('click', previousImage);
+    }
+
+    /* ================================ */
+    /* KEYBOARD */
+    /* ================================ */
+
+    document.addEventListener('keydown', function (event) {
+      if (event.key === 'ArrowRight') {
+        nextImage();
+      }
+
+      if (event.key === 'ArrowLeft') {
+        previousImage();
+      }
+    });
+
+    /* ================================ */
+    /* SWIPE */
+    /* ================================ */
+
+    if (gallery) {
+      gallery.addEventListener('pointerdown', function (event) {
+        startX = event.clientX;
+      });
+
+      gallery.addEventListener('pointerup', function (event) {
+        const difference = event.clientX - startX;
+
+        if (Math.abs(difference) < 50) {
+          return;
+        }
+
+        if (difference < 0) {
+          nextImage();
+        } else {
+          previousImage();
+        }
+      });
+    }
+
+    /* ================================ */
+    /* PAGE TRANSITION DIRECTION */
+    /* ================================ */
+
+    document
+      .querySelectorAll('.project-nav')
+      .forEach(function (link) {
+
+        link.addEventListener('click', function () {
+          const direction = link.getAttribute(
+            'data-direction'
+          );
+
+          if (direction) {
+            document.documentElement.setAttribute(
+              'data-direction',
+              direction
+            );
+          }
+        });
+
+      });
+  }
+
+  initProjectPage();
+
+  document.addEventListener(
+    'astro:after-swap',
+    initProjectPage
+  );
+</script>

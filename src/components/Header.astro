@@ -1,0 +1,119 @@
+---
+const navItems = [
+  { label: 'Portofolio', href: '/#work' },
+  { label: 'Layanan', href: '/#services' },
+  { label: 'Tentang Kami', href: '/#about' },
+  { label: 'Kontak', href: '/#contact' },
+];
+---
+
+<!-- Top Header -->
+<header
+  id="mainHeader"
+  class="fixed top-0 left-0 right-0 h-16 flex items-center px-10 z-50 border-b border-transparent transition-all duration-400"
+>
+  <a href="/" class="flex items-center no-underline relative z-10">
+    <img src="/images/orion.png" alt="Orion Entertainment" class="h-[60px] w-auto" />
+  </a>
+
+  <!-- Desktop Nav -->
+  <nav
+    class="hidden md:flex items-center gap-10 absolute left-1/2 -translate-x-1/2"
+    aria-label="Main navigation"
+  >
+    {navItems.map((item) => (
+      <a
+        href={item.href}
+        data-section={item.label.toLowerCase()}
+        class="nav-link relative text-[11px] font-medium tracking-[0.14em] uppercase text-gray no-underline transition-colors duration-300 hover:text-white"
+      >
+        {item.label}
+      </a>
+    ))}
+  </nav>
+
+  <!-- Hamburger -->
+  <button
+    id="hamburgerBtn"
+    class="hamburger flex md:hidden flex-col justify-center gap-1.5 w-8 h-8 bg-transparent border-none cursor-pointer p-1 ml-auto"
+    aria-label="Menu"
+  >
+    <span class="block w-full h-[1.5px] bg-white transition-transform duration-300"></span>
+    <span class="block w-full h-[1.5px] bg-white transition-opacity duration-300"></span>
+    <span class="block w-full h-[1.5px] bg-white transition-transform duration-300"></span>
+  </button>
+</header>
+
+<!-- Mobile Menu Overlay -->
+<div
+  id="mobileMenu"
+  class="fixed inset-0 bg-black z-49 flex-col items-center justify-center gap-9 opacity-0 pointer-events-none transition-opacity duration-300 hidden md:hidden"
+>
+  <a href="/" class="font-display text-4xl text-off-white no-underline transition-colors hover:text-accent">Home</a>
+  {navItems.map((item) => (
+    <a
+      href={item.href}
+      class="mobile-menu-link font-display text-4xl text-off-white no-underline transition-colors hover:text-accent"
+    >
+      {item.label}
+    </a>
+  ))}
+</div>
+
+<script>
+  function initHeader() {
+    const header = document.getElementById('mainHeader');
+    const hamburger = document.getElementById('hamburgerBtn');
+    const mobileMenu = document.getElementById('mobileMenu');
+
+    // Scroll state
+    window.addEventListener('scroll', () => {
+      header?.classList.toggle('header-scrolled', window.scrollY > 80);
+
+      // Active nav link
+      const sections = ['work', 'services', 'about', 'contact'];
+      const scrollY = window.scrollY + 200;
+      let active = 'work';
+      sections.forEach((id) => {
+        const el = document.getElementById(id);
+        if (el && el.offsetTop <= scrollY) active = id;
+      });
+      document.querySelectorAll('.nav-link').forEach((a) => {
+        const el = a as HTMLElement;
+        el.classList.toggle('active', el.dataset.section === active);
+        el.classList.toggle('text-white', el.dataset.section === active);
+      });
+    });
+
+    // Mobile menu
+    hamburger?.addEventListener('click', () => {
+      const isOpen = mobileMenu?.classList.contains('open');
+      if (isOpen) {
+        mobileMenu?.classList.remove('open');
+        mobileMenu?.classList.add('pointer-events-none', 'opacity-0');
+        hamburger.classList.remove('open');
+        document.body.style.overflow = '';
+      } else {
+        mobileMenu?.classList.add('open');
+        mobileMenu?.classList.remove('pointer-events-none', 'opacity-0');
+        mobileMenu!.style.display = 'flex';
+        hamburger.classList.add('open');
+        document.body.style.overflow = 'hidden';
+      }
+    });
+
+    // Close mobile menu on link click
+    document.querySelectorAll('.mobile-menu-link').forEach((link) => {
+      link.addEventListener('click', () => {
+        mobileMenu?.classList.remove('open');
+        mobileMenu?.classList.add('pointer-events-none', 'opacity-0');
+        hamburger?.classList.remove('open');
+        document.body.style.overflow = '';
+      });
+    });
+  }
+
+  // Run on initial load and after Astro page transitions
+  initHeader();
+  document.addEventListener('astro:after-swap', initHeader);
+</script>

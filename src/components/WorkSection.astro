@@ -1,0 +1,60 @@
+---
+import { projects, featuredProjectIds } from '../data/projects';
+
+const featured = featuredProjectIds
+  .map((id) => projects.find((p) => p.id === id))
+  .filter(Boolean);
+
+function makeGradient(index: number): string {
+  const hues = [210, 140, 30, 260, 180, 50, 220, 340, 160, 300, 100, 190, 25];
+  const h = hues[index % hues.length];
+  return `linear-gradient(135deg, hsl(${h},25%,18%) 0%, hsl(${(h + 40) % 360},20%,12%) 50%, hsl(${(h + 80) % 360},15%,8%) 100%)`;
+}
+---
+
+<section class="circuit-texture relative py-28 px-16 max-lg:py-20 max-lg:px-6 border-t border-border overflow-hidden" id="work">
+  <div class="text-[10px] font-medium tracking-[0.2em] uppercase text-dark-gray mb-12 reveal">Portofolio</div>
+
+  <div class="max-w-[2000px] mx-auto">
+    {featured.map((p, i) => (
+      <a
+        href={`/work/${p!.slug}`}
+        class:list={[
+          'work-item grid gap-12 items-center py-12 border-b border-border cursor-pointer no-underline text-inherit reveal',
+          i % 2 === 0 ? 'grid-cols-[1fr_1fr] max-lg:grid-cols-1' : 'grid-cols-[1fr_1fr] max-lg:grid-cols-1 direction-rtl',
+        ]}
+      >
+        <div class={`aspect-[16/10] overflow-hidden relative ${i % 2 !== 0 ? 'direction-ltr' : ''}`}>
+        {p!.thumbnail ? (
+          <img
+            src={p!.thumbnail}
+            alt={p!.title}
+            class="work-thumb-bg w-full h-full object-cover transition-transform duration-600"
+            loading="lazy"
+          />
+        ) : (
+          <div
+            class="work-thumb-bg w-full h-full transition-transform duration-600"
+            style={`background: ${makeGradient(p!.id - 1)}`}
+          />
+        )}
+      </div>
+        <div class={i % 2 !== 0 ? 'direction-ltr' : ''}>
+          <div class="text-[10px] tracking-[0.15em] uppercase text-dark-gray mb-3">{p!.category}</div>
+          <div class="work-title font-display text-[clamp(22px,2.5vw,32px)] font-normal text-off-white mb-3 leading-snug transition-colors duration-300">
+            {p!.title}
+          </div>
+          <div class="text-xs text-dark-gray">{p!.location} · {p!.year}</div>
+          <div class="work-cta mt-5 text-[11px] tracking-[0.12em] uppercase text-gray inline-flex items-center gap-2 transition-all duration-300">
+            Selengkapnya <span>→</span>
+          </div>
+        </div>
+      </a>
+    ))}
+  </div>
+</section>
+
+<style>
+  .direction-rtl { direction: rtl; }
+  .direction-ltr { direction: ltr; }
+</style>
