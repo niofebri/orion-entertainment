@@ -32,6 +32,11 @@ function isVideo(src: string): boolean {
 
 const videoThumbnail = project.thumbnail ?? project.heroImage;
 
+function safeISODate(value: string): string {
+  const parsed = new Date(value);
+  return isNaN(parsed.getTime()) ? new Date().toISOString() : parsed.toISOString();
+}
+
 const videoSchema = gallery
   .filter(isVideo)
   .map((video) => ({
@@ -40,11 +45,11 @@ const videoSchema = gallery
     "name": project.title,
     "description": project.description || `${project.category} — ${project.title}`,
     "thumbnailUrl": videoThumbnail ? [new URL(videoThumbnail, Astro.site).toString()] : [],
-    "uploadDate": new Date(project.date).toISOString(),
+    "uploadDate": safeISODate(project.date),
     "contentUrl": new URL(video, Astro.site).toString(),
   }));
 ---
----
+
 
 <Layout
   title={`${project.title} — Orion Entertainment`}
