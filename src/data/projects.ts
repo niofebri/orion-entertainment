@@ -23,7 +23,7 @@ export const projects: Project[] = [
     location: "The Patra Hotel",
     date: "18 Juni 2024",
     year: "2024",
-    thumbnail: "/images/patra/patra.jpg",
+    thumbnail: "/images/patra/patra.webp",
     heroVideo: "/images/patra/patra.mp4",
     description:
       'Menghadirkan cerita visual tentang fasilitas, layanan, dan pengalaman di hotel Patra di berbagai wilayah Indonesia.',
@@ -43,8 +43,8 @@ export const projects: Project[] = [
     year: "2024",
     description:
       'PT. Intecs Golf Tournament 2024, sebuah ajang golf yang mempertemukan para direktur perusahaan, mitra, sponsor, dan penggemar golf dalam suasana kompetitif dan penuh kebersamaan.',
-    thumbnail: "/images/intecs/intecs.jpg",
-    heroImage: "/images/intecs/intecs.jpg",
+    thumbnail: "/images/intecs/intecs.webp",
+    heroImage: "/images/intecs/intecs.webp",
   },
   {
     id: 3,
@@ -56,8 +56,8 @@ export const projects: Project[] = [
     year: "2024",
     description:
       'Proyek revitalisasi Pasar Toboali oleh Kementerian PUPR, menghadirkan ruang perdagangan yang modern sekaligus mendukung perkembangan UMKM di Bangka Belitung.',
-    thumbnail: "/images/toboali/toboali.jpg",
-    heroImage: "/images/toboali/toboali.jpg",
+    thumbnail: "/images/toboali/toboali.webp",
+    heroImage: "/images/toboali/toboali.webp",
   },
   {
     id: 4,
@@ -69,8 +69,8 @@ export const projects: Project[] = [
     year: "2024",
     description:
       'Penyelenggaraan Puncak Hari Habitat Dunia dan Hari Kota Dunia 2024 oleh Kementerian PUPR di GIK UGM, Yogyakarta, dengan fokus pada aksi pemuda dan pembangunan berkelanjutan.',
-    thumbnail: "/images/habitat/habitat.jpg",
-    heroImage: "/images/habitat/habitat.jpg",
+    thumbnail: "/images/habitat/habitat.webp",
+    heroImage: "/images/habitat/habitat.webp",
   },
   {
     id: 5,
@@ -82,15 +82,15 @@ export const projects: Project[] = [
     year: "2024",
     description:
       'Penyelenggaraan Talkshow Microtunneling oleh BPPW Jakarta Metropolitan yang membahas teknologi konstruksi bawah tanah modern sebagai solusi pembangunan infrastruktur perkotaan dengan minim gangguan terhadap aktivitas masyarakat.',
-    thumbnail: "/images/talkshow/talkshow.jpg",
-    heroImage: "/images/talkshow/talkshow.jpg",
+    thumbnail: "/images/talkshow/talkshow.webp",
+    heroImage: "/images/talkshow/talkshow.webp",
     gallery: [
-      '/images/talkshow/talkshow.jpg',
-      '/images/talkshow/talkshow2.jpg',
-      '/images/talkshow/talkshow3.jpg',
-      '/images/talkshow/talkshow4.jpg',
-      '/images/talkshow/talkshow5.jpg',
-      '/images/talkshow/talkshow6.jpg',]
+      '/images/talkshow/talkshow.webp',
+      '/images/talkshow/talkshow2.webp',
+      '/images/talkshow/talkshow3.webp',
+      '/images/talkshow/talkshow4.webp',
+      '/images/talkshow/talkshow5.webp',
+      '/images/talkshow/talkshow6.webp',]
   },
   {
     id: 6,
@@ -102,8 +102,8 @@ export const projects: Project[] = [
     year: "2024",
     description:
       'Revitalisasi Pasar Natar, Lampung Selatan, menjadi pasar modern yang lebih tertata, bersih, dan inklusif, dengan fasilitas baru yang mendukung aktivitas perdagangan dan kenyamanan masyarakat.',
-    thumbnail: "/images/natar/natar.jpg",
-    heroImage: "/images/natar/natar.jpg"
+    thumbnail: "/images/natar/natar.webp",
+    heroImage: "/images/natar/natar.webp"
   },
   {
     id: 7,
@@ -115,11 +115,11 @@ export const projects: Project[] = [
     year: "2024",
     description:
       'Penyelenggaraan rapat koordinasi untuk mengevaluasi pelaksanaan program Tahun Anggaran 2024 sekaligus mempersiapkan pelaksanaan program dan kegiatan Tahun Anggaran 2025 di lingkungan Direktorat Prasarana Strategis, Kementerian Pekerjaan Umum.',
-    thumbnail: "/images/rakor/rakor.jpg",
+    thumbnail: "/images/rakor/rakor.webp",
     heroVideo: "/images/rakor/rakor.mp4",
     gallery: [
       '/images/rakor/rakor.mp4',
-      '/images/rakor/rakor1.jpg']
+      '/images/rakor/rakor1.webp']
   },
   {
     id: 8,
@@ -131,14 +131,14 @@ export const projects: Project[] = [
     year: "2024",
     description:
       'Penyelenggaraan rapat koordinasi untuk mengevaluasi pelaksanaan program Tahun Anggaran 2024 sekaligus mempersiapkan pelaksanaan program dan kegiatan Tahun Anggaran 2025 di lingkungan Direktorat Prasarana Strategis, Kementerian Pekerjaan Umum.',
-    thumbnail: "/images/outbond/outbond1.jpg",
+    thumbnail: "/images/outbond/outbond1.webp",
     heroVideo: "/images/outbond/outbond1.mp4",
     gallery: [
       '/images/outbond/outbond1.mp4',
-      '/images/outbond/outbond2.jpg',
-      '/images/outbond/outbond3.jpg',
-      '/images/outbond/outbond4.jpg',
-      '/images/outbond/outbond5.jpg',]
+      '/images/outbond/outbond2.webp',
+      '/images/outbond/outbond3.webp',
+      '/images/outbond/outbond4.webp',
+      '/images/outbond/outbond5.webp',]
   },
   {
     id: 9,
@@ -150,8 +150,8 @@ export const projects: Project[] = [
     year: "2025",
     description:
       ' Dibangun melalui kerja sama dengan Kementerian Pekerjaan Umum (PU) serta melibatkan PT Adhi Karya dan PT Virama Karya. Mengusung konsep green building yang ramah lingkungan dengan penerapan prinsip ESG (Environmental, Social, and Governance), panel surya, serta fasilitas pintar (smart building).',
-    thumbnail: "/images/ui/ui.jpg",
-    heroImage: "/images/ui/ui.jpg",
+    thumbnail: "/images/ui/ui.webp",
+    heroImage: "/images/ui/ui.webp",
 
   },
   {
@@ -164,12 +164,12 @@ export const projects: Project[] = [
     year: "2025",
     description:
       'Grand Opening PT Yuwell Medical Indonesia sebagai momen peresmian operasional di Indonesia sekaligus memperkenalkan produk perangkat homecare dan peralatan medis kepada mitra, tenaga kesehatan, dan masyarakat.',
-    thumbnail: "/images/yuwell/yuwell.jpg",
-    heroImage: "/images/yuwell/yuwell.jpg",
+    thumbnail: "/images/yuwell/yuwell.webp",
+    heroImage: "/images/yuwell/yuwell.webp",
     heroVideo: "/images/yuwell/yuwell.mp4",
     gallery: [
       '/images/yuwell/yuwell.mp4',
-      '/images/yuwell/yuwell.jpg',
+      '/images/yuwell/yuwell.webp',
     ]
   },
   {
@@ -182,8 +182,8 @@ export const projects: Project[] = [
     year: "2025",
     description:
       'Penyelenggaraan Peringatan HUT ke-27 Komnas Perempuan pada 15 Oktober 2025 di Jakarta, dengan tema “Teguhkan Mandat, Menolak Penyangkalan Kekerasan Seksual Mei 1998” sebagai ruang refleksi dan peneguhan mandat Komnas Perempuan.',
-    thumbnail: "/images/komnas/komnas.jpg",
-    heroImage: "/images/komnas/komnas.jpg",
+    thumbnail: "/images/komnas/komnas.webp",
+    heroImage: "/images/komnas/komnas.webp",
   },
   {
     id: 12,
@@ -193,19 +193,19 @@ export const projects: Project[] = [
     location: "Bumi Perkemahan Bongohulawa, Gorontalo",
     date: "2–7 November 2025",
     year: "2025",
-    thumbnail: "/images/wa/wa.jpg",
-    heroImage: "/images/wa/wa.jpg",
+    thumbnail: "/images/wa/wa.webp",
+    heroImage: "/images/wa/wa.webp",
     heroVideo: "/images/wa/wa.mp4",
     description:
       'Pamsimas Water Adventure 2025 oleh Kementerian Pekerjaan Umum di Bumi Perkemahan Bongohulawa, Gorontalo, yang menghadirkan kegiatan edukatif dan interaktif tentang air minum, sanitasi, serta kerja sama tim.',
     gallery: [
-      '/images/wa/wa1.jpg',
-      '/images/wa/wa2.jpg',
-      '/images/wa/wa3.jpg',
-      '/images/wa/wa4.jpg',
-      '/images/wa/wa5.jpg',
-      '/images/wa/wa6.jpg',
-      '/images/wa/wa7.jpg',]
+      '/images/wa/wa1.webp',
+      '/images/wa/wa2.webp',
+      '/images/wa/wa3.webp',
+      '/images/wa/wa4.webp',
+      '/images/wa/wa5.webp',
+      '/images/wa/wa6.webp',
+      '/images/wa/wa7.webp',]
   },
   {
     id: 13,
@@ -217,16 +217,16 @@ export const projects: Project[] = [
     year: "2026",
     description:
       'Peresmian dan penyerahan Hunian Sementara (Huntara) bagi warga terdampak bencana di Kabupaten Aceh Tamiang sebagai bagian dari proses pemulihan masyarakat.',
-    thumbnail: "/images/huntara/huntara1.jpg",
-    heroImage: "/images//huntara/huntara1.jpg",
+    thumbnail: "/images/huntara/huntara1.webp",
+    heroImage: "/images//huntara/huntara1.webp",
     heroVideo: "/images/huntara/huntara.mp4",
     gallery: [
-      '/images/huntara/huntara1.jpg',
-      '/images/huntara/huntara2.jpg',
-      '/images/huntara/huntara3.jpg',
-      '/images/huntara/huntara4.jpg',
-      '/images/huntara/huntara5.jpg',
-      '/images/huntara/huntara6.jpg',]
+      '/images/huntara/huntara1.webp',
+      '/images/huntara/huntara2.webp',
+      '/images/huntara/huntara3.webp',
+      '/images/huntara/huntara4.webp',
+      '/images/huntara/huntara5.webp',
+      '/images/huntara/huntara6.webp',]
   },
   {
     id: 14,
@@ -238,8 +238,8 @@ export const projects: Project[] = [
     year: "2026",
     description:
       'Program Senam Sehat PAM JAYA 2026 sebagai kegiatan kebugaran dan edukasi kesehatan bagi masyarakat Jakarta, yang menghadirkan senam bersama, pemeriksaan kesehatan gratis, serta berbagai aktivitas interaktif.',
-    thumbnail: "/images/pam/pam.jpg",
-    heroImage: "/images/pam/pam.jpg",
+    thumbnail: "/images/pam/pam.webp",
+    heroImage: "/images/pam/pam.webp",
   },
   {
     id: 15,
@@ -249,20 +249,20 @@ export const projects: Project[] = [
     location: "Bali",
     date: "26-30 Juni 2026",
     year: "2026",
-    thumbnail: "/images/arutmin/arutmin.jpg",
-    heroImage: "/images/arutmin/arutmin.jpg",
+    thumbnail: "/images/arutmin/arutmin.webp",
+    heroImage: "/images/arutmin/arutmin.webp",
     heroVideo: "/images/arutmin/arutmin.mp4",
     description:
       'Penyelenggaraan Company Gathering dan Gala Dinner PT Arutmin Indonesia bertema “Safe Sustain Stronger” di Bali, yang menghadirkan rangkaian team building, perayaan bersama, serta pemberian penghargaan bagi karyawan.',
     gallery: [
-      '/images/arutmin/arutmin1.jpg',
-      '/images/arutmin/arutmin2.jpg',
-      '/images/arutmin/arutmin3.jpg',
-      '/images/arutmin/arutmin4.jpg',
-      '/images/arutmin/arutmin5.jpg',
-      '/images/arutmin/arutmin6.jpg',
-      '/images/arutmin/arutmin7.jpg',
-      '/images/arutmin/arutmin8.jpg']
+      '/images/arutmin/arutmin1.webp',
+      '/images/arutmin/arutmin2.webp',
+      '/images/arutmin/arutmin3.webp',
+      '/images/arutmin/arutmin4.webp',
+      '/images/arutmin/arutmin5.webp',
+      '/images/arutmin/arutmin6.webp',
+      '/images/arutmin/arutmin7.webp',
+      '/images/arutmin/arutmin8.webp']
   },
   {
     id: 16,
@@ -272,29 +272,29 @@ export const projects: Project[] = [
     location: "Novotel BSD, Tangerang",
     date: "27-29 Agustus 2026",
     year: "2026",
-    thumbnail: "/images/workshop/workshop.jpg",
-    heroImage: "/images/workshop/workshop.jpg",
+    thumbnail: "/images/workshop/workshop.webp",
+    heroImage: "/images/workshop/workshop.webp",
     heroVideo: "/images/workshop/workshop.mp4",
     description:
       'Workshop P3DN dan Tata Cara Pengajuan Izin Penggunaan Barang Impor di lingkungan Direktorat Jenderal Prasarana Strategis, dengan fokus pada penerapan kebijakan penggunaan produk dalam negeri dan perhitungan TKDN.',
     gallery: [
-      '/images/workshop/workshop1.jpg',
-      '/images/workshop/workshop2.jpg',
-      '/images/workshop/workshop3.jpg',
-      '/images/workshop/workshop4.jpg',
-      '/images/workshop/workshop5.jpg']
+      '/images/workshop/workshop1.webp',
+      '/images/workshop/workshop2.webp',
+      '/images/workshop/workshop3.webp',
+      '/images/workshop/workshop4.webp',
+      '/images/workshop/workshop5.webp']
   },
 ];
 
 export const featuredProjectIds = [16, 15, 13, 12, 6, 5];
 
 export const services = [
-  { num: "01", title: "Event Production", image: "/images/services/eventproduction.jpg", imageOpacity: 50 },
-  { num: "02", title: "Event Management", image: "/images/services/eventmanagement.jpg", imageOpacity: 50 },
-  { num: "03", title: "Video Production", image: "/images/services/videoproduction.jpg", imageOpacity: 50 },
-  { num: "04", title: "Creative Production", image: "/images/services/creativeproduction.jpg", imageOpacity: 50 },
-  { num: "05", title: "Event Documentation", image: "/images/services/eventdocumentation.jpg", imageOpacity: 50 },
-  { num: "06", title: "Post Production", image: "/images/services/postpro.jpg", imageOpacity: 50 },
+  { num: "01", title: "Event Production", image: "/images/services/eventproduction.webp", imageOpacity: 50 },
+  { num: "02", title: "Event Management", image: "/images/services/eventmanagement.webp", imageOpacity: 50 },
+  { num: "03", title: "Video Production", image: "/images/services/videoproduction.webp", imageOpacity: 50 },
+  { num: "04", title: "Creative Production", image: "/images/services/creativeproduction.webp", imageOpacity: 50 },
+  { num: "05", title: "Event Documentation", image: "/images/services/eventdocumentation.webp", imageOpacity: 50 },
+  { num: "06", title: "Post Production", image: "/images/services/postpro.webp", imageOpacity: 50 },
 ];
 
 export interface Client {
@@ -304,12 +304,12 @@ export interface Client {
 }
 
 export const clients: Client[] = [
-  { name: "Kementerian Pekerjaan Umum", logo: "/images/logos/pu.png", logoHeight: "56px" },
-  { name: "Komnas Perempuan", logo: "/images/logos/komnas.png", logoHeight: "1200px" },
-  { name: "PAM JAYA", logo: "/images/logos/pamjaya.png", logoHeight: "90px" },
-  { name: "PT. Yuwell Medical Indonesia", logo: "/images/logos/yuwell.png" },
-  { name: "PT. Arutmin Indonesia", logo: "/images/logos/arutmin.png", logoHeight: "1200px" },
-  { name: "PT. Intecs", logo: "/images/logos/intecs.png" },
-  { name: "The Patra Hotel & Resort", logo: "/images/logos/patra.png" },
+  { name: "Kementerian Pekerjaan Umum", logo: "/images/logos/pu.webp", logoHeight: "56px" },
+  { name: "Komnas Perempuan", logo: "/images/logos/komnas.webp", logoHeight: "1200px" },
+  { name: "PAM JAYA", logo: "/images/logos/pamjaya.webp", logoHeight: "90px" },
+  { name: "PT. Yuwell Medical Indonesia", logo: "/images/logos/yuwell.webp" },
+  { name: "PT. Arutmin Indonesia", logo: "/images/logos/arutmin.webp", logoHeight: "1200px" },
+  { name: "PT. Intecs", logo: "/images/logos/intecs.webp" },
+  { name: "The Patra Hotel & Resort", logo: "/images/logos/patra.webp" },
 ];
 
