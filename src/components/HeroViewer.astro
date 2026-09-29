@@ -6,22 +6,26 @@ function makeGradient(index: number): string {
   const h = hues[index % hues.length];
   return `linear-gradient(135deg, hsl(${h},25%,18%) 0%, hsl(${(h + 40) % 360},20%,12%) 50%, hsl(${(h + 80) % 360},15%,8%) 100%)`;
 }
+
+const first = projects[0];
 ---
 
 <section class="h-dvh grid grid-cols-[1fr_350px] grid-rows-[minmax(0,1fr)] max-lg:grid-cols-1 max-lg:grid-rows-[60vh_auto] relative overflow-hidden" id="hero">
   <!-- Center Visual -->
   <div class="relative overflow-hidden cursor-crosshair min-h-0">
 <div class="absolute inset-0" id="heroImages">
-  {projects.map((p, i) => (
+    {projects.map((p, i) => (
     p.heroVideo ? (
       <video
         class:list={['hero-placeholder', 'w-full h-full object-cover', i === 0 && 'active']}
         data-index={i}
         src={p.heroVideo}
+        poster={p.thumbnail ?? p.heroImage}
         autoplay
         loop
         muted
         playsinline
+        {...(i === 0 ? { fetchpriority: 'high' } : {})}
       />
     ) : p.heroImage ? (
       <img
@@ -30,6 +34,7 @@ function makeGradient(index: number): string {
         class:list={['hero-placeholder', 'w-full h-full object-cover', i === 0 && 'active']}
         data-index={i}
         loading={i === 0 ? 'eager' : 'lazy'}
+        fetchpriority={i === 0 ? 'high' : 'auto'}
       />
     ) : (
       <div
@@ -48,9 +53,9 @@ function makeGradient(index: number): string {
 
     <!-- Content -->
     <div class="absolute bottom-24 left-14 right-14 z-2 max-lg:bottom-10 max-lg:left-6 max-lg:right-6">
-      <div id="heroCat" class="text-[10px] font-medium tracking-[0.2em] uppercase text-white mb-4 opacity-0 translate-y-3"></div>
-      <h1 id="heroTitle" class="font-display text-[clamp(24px,3.2vw,52px)] font-medium leading-[1.15] text-white mb-4 max-w-[640px] opacity-0 translate-y-5 line-clamp-3"></h1>
-      <p id="heroDesc" class="text-sm text-white/65 max-w-[480px] leading-relaxed opacity-0 translate-y-3"></p>
+      <div id="heroCat" class="text-[10px] font-medium tracking-[0.2em] uppercase text-white mb-4">{first.category}</div>
+      <h1 id="heroTitle" class="font-display text-[clamp(24px,3.2vw,52px)] font-medium leading-[1.15] text-white mb-4 max-w-[640px] line-clamp-3">{first.title}</h1>
+      <p id="heroDesc" class="text-sm text-white/65 max-w-[480px] leading-relaxed">{first.location} — {first.date}</p>
     </div>
 
     <!-- Arrows -->
@@ -61,7 +66,7 @@ function makeGradient(index: number): string {
   </div>
 
   <!-- Right Panel -->
-  <aside class="bg-charcoal border-l border-border flex flex-col pt-24 px-8 pb-12 max-lg:pt-8 max-lg:px-5 min-h-0">
+    <aside class="bg-charcoal border-l border-border flex flex-col pt-24 px-8 pb-12 max-lg:pt-8 max-lg:px-5 min-h-0">
     <div class="shrink-0">
       <div class="text-[10px] font-medium tracking-[0.2em] uppercase text-dark-gray mb-12">Portofolio</div>
       <div class="font-display text-[56px] max-lg:text-4xl font-normal text-off-white mb-2 leading-none">
@@ -72,14 +77,14 @@ function makeGradient(index: number): string {
 
     <div class="flex-1 min-h-0 overflow-y-auto flex flex-col justify-start pt-6">
       <div class="text-[10px] font-medium tracking-[0.15em] uppercase text-dark-gray mb-1.5">Ketegori</div>
-      <div id="panelCat" class="text-sm text-gray mb-6 leading-normal"></div>
+      <div id="panelCat" class="text-sm text-gray mb-6 leading-normal">{first.category}</div>
       <div class="text-[10px] font-medium tracking-[0.15em] uppercase text-dark-gray mb-1.5">Lokasi</div>
-      <div id="panelLoc" class="text-sm text-gray mb-6 leading-normal"></div>
+      <div id="panelLoc" class="text-sm text-gray mb-6 leading-normal">{first.location}</div>
       <div class="text-[10px] font-medium tracking-[0.15em] uppercase text-dark-gray mb-1.5">Tanggal</div>
-      <div id="panelDate" class="text-sm text-gray mb-6 leading-normal"></div>
+      <div id="panelDate" class="text-sm text-gray mb-6 leading-normal">{first.date}</div>
     </div>
 
-    <a href="#" id="panelCta" class="panel-cta shrink-0 inline-flex items-center gap-3 text-[11px] font-medium tracking-[0.15em] uppercase text-off-white no-underline py-4 border-t border-b border-border cursor-pointer transition-all duration-300 w-full">
+    <a href={first.slug ? `/work/${first.slug}` : '#'} id="panelCta" class="panel-cta shrink-0 inline-flex items-center gap-3 text-[11px] font-medium tracking-[0.15em] uppercase text-off-white no-underline py-4 border-t border-b border-border cursor-pointer transition-all duration-300 w-full">
   <span>Selengkapnya</span>
       <svg class="w-4 h-4 shrink-0" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
     </a>
@@ -160,7 +165,7 @@ function makeGradient(index: number): string {
     });
 
     // Init first project
-    update(0);
+    current = 0;
   }
 
   initHeroViewer();
