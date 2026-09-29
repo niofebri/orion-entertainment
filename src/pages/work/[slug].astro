@@ -29,12 +29,30 @@ const gallery = project.gallery ?? [];
 function isVideo(src: string): boolean {
   return /\.(mp4|webm|mov)$/i.test(src);
 }
+
+const videoThumbnail = project.thumbnail ?? project.heroImage;
+
+const videoSchema = gallery
+  .filter(isVideo)
+  .map((video) => ({
+    "@context": "https://schema.org",
+    "@type": "VideoObject",
+    "name": project.title,
+    "description": project.description || `${project.category} — ${project.title}`,
+    "thumbnailUrl": videoThumbnail ? [new URL(videoThumbnail, Astro.site).toString()] : [],
+    "uploadDate": new Date(project.date).toISOString(),
+    "contentUrl": new URL(video, Astro.site).toString(),
+  }));
+---
 ---
 
 <Layout
   title={`${project.title} — Orion Entertainment`}
   description={`${project.category} at ${project.location}`}
 >
+  {videoSchema.map((schema) => (
+    <script type="application/ld+json" set:html={JSON.stringify(schema)} />
+  ))}
   <section
     class="min-h-dvh grid grid-cols-[1fr_350px] max-lg:grid-cols-1 max-lg:grid-rows-[55vh_auto]"
   >
@@ -58,6 +76,7 @@ function isVideo(src: string): boolean {
               ]}
               data-index={index}
               src={media}
+              poster={project.thumbnail ?? project.heroImage}
               autoplay
               loop
               muted
